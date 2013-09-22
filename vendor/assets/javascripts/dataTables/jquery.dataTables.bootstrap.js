@@ -1,7 +1,3 @@
-/* Default class modification */
-$.extend( $.fn.dataTableExt.oStdClasses, {
-	"sWrapper": "dataTables_wrapper form-inline"
-} );
 
 /* API method to get paging information */
 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
@@ -41,7 +37,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
 		},
 
 		"fnUpdate": function ( oSettings, fnDraw ) {
-			var iListLength = jQuery.fn.dataTableExt.oPagination.iFullNumbersShowPages;
+			var iListLength = 5;
 			var oPaging = oSettings.oInstance.fnPagingInfo();
 			var an = oSettings.aanFeatures.p;
 			var i, j, sClass, iStart, iEnd, iHalf=Math.floor(iListLength/2);

@@ -55,7 +55,6 @@
 
 .dataTables_wrapper .ui-toolbar {
 	padding: 5px;
-    margin: 0 auto;
 }
 
 .dataTables_paginate {
@@ -83,7 +82,6 @@ div.dataTables_wrapper .ui-widget-header {
 table.display thead th div.DataTables_sort_wrapper {
 	position: relative;
 	padding-right: 20px;
-	padding-right: 20px;
 }
 
 table.display thead th div.DataTables_sort_wrapper span {
@@ -109,7 +107,6 @@ table.display thead th div.DataTables_sort_wrapper span {
  * DataTables features
  */
 
-/* Wrapper only effects the Header and Footer content, not the results in the DataTable */
 .dataTables_wrapper {
 	position: relative;
 	clear: both;
@@ -128,55 +125,25 @@ table.display thead th div.DataTables_sort_wrapper span {
 	padding: 2px 0;
 }
 
-/* Length is the dropdown which selects the number of items to return */
 .dataTables_length {
 	width: 40%;
 	float: left;
 }
 
-/* Filter is the Search Field  */
 .dataTables_filter {
 	width: 50%;
 	float: right;
 	text-align: right;
-    padding: 3px;
 }
 
-/* Info is the footer which displays the number of results displaying out of the total number of results  */
 .dataTables_info {
 	width: 50%;
 	float: left;
 }
 
-/* Paginate is the footer which lists the pages */
 .dataTables_paginate {
 	float: right;
 	text-align: right;
-    padding: 3px;
-}
-
-/* Pagination nested */
-.paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
-	height: 19px;
-	width: 19px;
-	margin-left: 3px;
-	float: left;
-}
-
-.paginate_disabled_previous {
-	background-image: url('/assets/dataTables/back_disabled.jpg');
-}
-
-.paginate_enabled_previous {
-	background-image: url('/assets/dataTables/back_enabled.jpg');
-}
-
-.paginate_disabled_next {
-	background-image: url('/assets/dataTables/forward_disabled.jpg');
-}
-
-.paginate_enabled_next {
-	background-image: url('/assets/dataTables/forward_enabled.jpg');
 }
 
 
@@ -216,23 +183,23 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('/assets/dataTables/sort_asc.png') no-repeat center right;
+	background: url('../images/sort_asc.png') no-repeat center right;
 }
 
 .sorting_desc {
-	background: url('/assets/dataTables/sort_desc.png') no-repeat center right;
+	background: url('../images/sort_desc.png') no-repeat center right;
 }
 
 .sorting {
-	background: url('/assets/dataTables/sort_both.png') no-repeat center right;
+	background: url('../images/sort_both.png') no-repeat center right;
 }
 
 .sorting_asc_disabled {
-	background: url('/assets/dataTables/sort_asc_disabled.png') no-repeat center right;
+	background: url('../images/sort_asc_disabled.png') no-repeat center right;
 }
 
 .sorting_desc_disabled {
-	background: url('/assets/dataTables/sort_desc_disabled.png') no-repeat center right;
+	background: url('../images/sort_desc_disabled.png') no-repeat center right;
 }
 
 
@@ -302,6 +269,10 @@ tr.even {
  */
 .dataTables_scroll {
 	clear: both;
+}
+
+.dataTables_scrollBody {
+	-webkit-overflow-scrolling: touch;
 }
 
 .top, .bottom {

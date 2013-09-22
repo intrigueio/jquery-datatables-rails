@@ -2,7 +2,7 @@
  * @summary     FixedColumns
  * @description Freeze columns in place on a scrolling DataTable
  * @file        FixedColumns.js
- * @version     2.0.4.dev
+ * @version     2.0.3
  * @author      Allan Jardine (www.sprymedia.co.uk)
  * @license     GPL v2 or BSD 3 point style
  * @contact     www.sprymedia.co.uk/contact
@@ -83,20 +83,11 @@ FixedColumns = function ( oDT, oInit ) {
 		"iTableColumns": oDT.fnSettings().aoColumns.length,
 		
 		/** 
-		 * Original outer widths of the columns as rendered by DataTables - used to calculate
-		 * the FixedColumns grid bounding box
+		 * Original widths of the columns as rendered by DataTables
 		 *  @type     array.<int>
 		 *  @default  []
 		 */
-		"aiOuterWidths": [],
-		
-		/** 
-		 * Original inner widths of the columns as rendered by DataTables - used to apply widths
-		 * to the columns
-		 *  @type     array.<int>
-		 *  @default  []
-		 */
-		"aiInnerWidths": [],
+		"aiWidths": [],
 		
 		/** 
 		 * Flag to indicate if we are dealing with IE6/7 as these browsers need a little hack
@@ -402,14 +393,9 @@ FixedColumns.prototype = {
 		var iLeftWidth = 0;
 		var iRightWidth = 0;
 
-		$('tbody>tr:eq(0)>td, tbody>tr:eq(0)>th', this.s.dt.nTable).each( function (i) {
-			// Inner width is used to assign widths to cells
-			that.s.aiInnerWidths.push( $(this).width() );
-			
-			// Outer width is used to calculate the container
+		$('tbody>tr:eq(0)>td', this.s.dt.nTable).each( function (i) {
 			iWidth = $(this).outerWidth();
-			that.s.aiOuterWidths.push( iWidth );
-
+			that.s.aiWidths.push( iWidth );
 			if ( i < that.s.iLeftColumns )
 			{
 				iLeftWidth += iWidth;
@@ -425,7 +411,7 @@ FixedColumns.prototype = {
 			this.s.iLeftWidth = this.s.sLeftWidth == 'fixed' ?
 				iLeftWidth : (iLeftWidth/iScrollWidth) * 100; 
 		}
-
+		
 		if ( this.s.iRightWidth === null )
 		{
 			this.s.iRightWidth = this.s.sRightWidth == 'fixed' ?
@@ -795,18 +781,18 @@ FixedColumns.prototype = {
 			 * fixed component, we use the DataTables _fnDetectHeader method, allowing 1:1 mapping
 			 */
 			var aoCloneLayout = this._fnCopyLayout( this.s.dt.aoHeader, aiColumns );
-			var aoFixedHeader=[];
+			var aoCurrHeader=[];
 
-			this.s.dt.oApi._fnDetectHeader( aoFixedHeader, $('>thead', oClone.header)[0] );
+			this.s.dt.oApi._fnDetectHeader( aoCurrHeader, $('>thead', oClone.header)[0] );
 
 			for ( i=0, iLen=aoCloneLayout.length ; i<iLen ; i++ )
 			{
 				for ( j=0, jLen=aoCloneLayout[i].length ; j<jLen ; j++ )
 				{
-					aoFixedHeader[i][j].cell.className = aoCloneLayout[i][j].cell.className;
+					aoCurrHeader[i][j].cell.className = aoCloneLayout[i][j].cell.className;
 
 					// If jQuery UI theming is used we need to copy those elements as well
-					$('span.DataTables_sort_icon', aoFixedHeader[i][j].cell).each( function () {
+					$('span.DataTables_sort_icon', aoCurrHeader[i][j].cell).each( function () {
 						this.className = $('span.DataTables_sort_icon', aoCloneLayout[i][j].cell)[0].className;
 					} );
 				}
@@ -854,7 +840,7 @@ FixedColumns.prototype = {
 			{
 				iColumn = aiColumns[iIndex];
 
-				nClone = $(this.s.dt.aoColumns[iColumn].nTh).clone(true)[0];
+				nClone = this.s.dt.aoColumns[iColumn].nTh;
 				nClone.innerHTML = "";
 
 				oStyle = nClone.style;
@@ -863,7 +849,7 @@ FixedColumns.prototype = {
 				oStyle.borderTopWidth = "0";
 				oStyle.borderBottomWidth = "0";
 				oStyle.height = 0;
-				oStyle.width = that.s.aiInnerWidths[iColumn]+"px";
+				oStyle.width = that.s.aiWidths[iColumn]+"px";
 
 				nInnerThead.appendChild( nClone );
 			}
@@ -949,7 +935,7 @@ FixedColumns.prototype = {
 		var anUnique = this.s.dt.oApi._fnGetUniqueThs( this.s.dt, $('>thead', oClone.header)[0] );
 		$(anUnique).each( function (i) {
 			iColumn = aiColumns[i];
-			this.style.width = that.s.aiInnerWidths[iColumn]+"px";
+			this.style.width = that.s.aiWidths[iColumn]+"px";
 		} );
 
 		if ( that.s.dt.nTFoot !== null )
@@ -957,7 +943,7 @@ FixedColumns.prototype = {
 			anUnique = this.s.dt.oApi._fnGetUniqueThs( this.s.dt, $('>tfoot', oClone.footer)[0] );
 			$(anUnique).each( function (i) {
 				iColumn = aiColumns[i];
-				this.style.width = that.s.aiInnerWidths[iColumn]+"px";
+				this.style.width = that.s.aiWidths[iColumn]+"px";
 			} );
 		}
 	},
@@ -1218,7 +1204,7 @@ FixedColumns.prototype.CLASS = "FixedColumns";
  *  @default   See code
  *  @static
  */
-FixedColumns.VERSION = "2.0.4.dev";
+FixedColumns.VERSION = "2.0.3";
 
 
 
